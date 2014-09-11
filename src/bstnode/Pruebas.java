@@ -1,44 +1,104 @@
 
 package bstnode;
 
-// no imprime nada, pero maneja dos string
+import java.io.*;
+import java.util.*;
+
 
 public class Pruebas {
-    public static Object str;
-    public static Object nuevo;
-    public static int entero;
+    static Object str;
+    static Object nuevo;
+    static int entero;
+    static String sCadena;
+    static ArrayList palabras = new ArrayList();
+    static String palabras2[]=new String[2];
+
+//inicio del programa
+//------------------------------------------------------------//
     public static void main(String[] args) {    
-    
-    BST tree = new BST();
-    tree.put( "facil", "eff" );
-    tree.put( "conjunto", "eee" );
-    tree.put( "aire", "aye" );
-    tree.put( "e", "sea" );
-    tree.put( "iglu", "eye" );
-    tree.put( "h", "aitch" );
-    tree.put( "z", "zed" );
- //   String str = tree.get("i"); // str will equal "eye"
- //   tree.put( "i", "eye updated" );
- //   str = tree.get( "i" ); // str will equal "eye updated"
 
+        BST tree = new BST();
+//------------------------------------------------------------//
+//lectura del archivo de texto
+//-----------------------------------------------------------//    
+        String oracion;
+        String palabra1;
+        String palabra2;
+        try {
+            FileReader fr = new FileReader("diccionario.txt");
+            BufferedReader bf = new BufferedReader(fr);
+            while((oracion = bf.readLine())!=null){
+                
+                oracion=oracion.replace("("," ");
+                oracion=oracion.replace(")"," ");
+                palabras2=oracion.split(",");
+                tree.put(palabras2[0],palabras2[1]);
 
-    System.out.println("BUSCAR");
-    str = tree.get( "e" );      //objecto
-     
-    nuevo = "sea";                                  // Palabra que se desea buscar
-    String AsString = "" + nuevo;                   // Lo coloca como tostring
-    
-    entero= AsString.compareTo(str.toString());     //como to string compara
-    System.out.println(entero );                    // = 0 lo encontro
-    System.out.println("Lo encontro = 0, sino =! 0");
-    System.out.println("Impresion como objeto = "+ tree.get( "e" ));//imprime como objecto
-     
-    System.out.println();
-    System.out.println("INordered Strings:");
-    BST.InorderPrint(tree.getRoot());
-    System.out.println();
-    
-    
+            }
+            } catch (FileNotFoundException fnfe){
+                fnfe.printStackTrace();
+            } catch (IOException ioe){
+                    ioe.printStackTrace();
+            }
+//-----------------------------------------------------------//
 
-}
+//-----------------------------------------------------------//
+        tree.put( "facil", "eff" );
+        tree.put( "conjunto", "eee" );
+        tree.put( "aire", "aye" );
+        tree.put( "e", "sea" );
+        tree.put( "iglu", "eye" );
+        tree.put( "h", "aitch" );
+        tree.put( "z", "zed" );
+//-----------------------------------------------------------//
+
+//-----------------------------------------------------------//
+        System.out.println("BUSCAR");
+        str = tree.get( "e" );      //objecto
+//-----------------------------------------------------------//
+//se lee el archivo a traducir y se separa en palabras
+//las palabras de guardan en una arraylist
+//-----------------------------------------------------------//
+        String oracion2;
+        String palabra3;
+        try {
+            FileReader fr = new FileReader("texto.txt");
+            BufferedReader bf = new BufferedReader(fr);
+            // Leemos la primera linea
+            oracion2 = bf.readLine();
+
+            int contador = 0;
+            StringTokenizer st = new StringTokenizer (oracion2);
+            // bucle por todas las palabras
+            while (st.hasMoreTokens()){
+                palabra3 = st.nextToken();
+                palabras.add(palabra3);
+                contador++;
+            }
+            }catch (FileNotFoundException fnfe){
+                fnfe.printStackTrace();
+            }catch (IOException ioe){
+                ioe.printStackTrace();
+            }
+//-----------------------------------------------------------//
+//recorre el array para ver si la palabra se puede traducir
+//-----------------------------------------------------------//
+        for(int i=0;i<palabras.size();i++){
+            nuevo = palabras.get(i);                        // Palabra que se desea buscar
+            String AsString = "" + nuevo;                   // Lo coloca como tostring
+
+            entero = AsString.compareTo(str.toString());     //como to string compara
+            if(entero==0){                                  //si encontro la palabra, se cambia por la traduccion en espa;ol
+                System.out.print("");
+
+            }else{                                          //si no encontro la palabra, se imprime en ingles
+                System.out.print("*"+nuevo+"* ");
+            }
+        }
+        System.out.println();
+        System.out.println("INordered Strings:");           //se imprime el arbol en In-orden
+        BST.InorderPrint(tree.getRoot());
+        System.out.println();        
+//-----------------------------------------------------------//
+    }
 }

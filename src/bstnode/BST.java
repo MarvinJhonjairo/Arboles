@@ -1,7 +1,7 @@
 
 package bstnode;
 
-public class BST{
+public class BST<E>{
     private BSTNode root;
 
    public BST(){

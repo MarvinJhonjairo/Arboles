@@ -29,8 +29,8 @@ public class Pruebas {
             BufferedReader bf = new BufferedReader(fr);
             while((oracion = bf.readLine())!=null){
                 
-                oracion=oracion.replace("("," ");
-                oracion=oracion.replace(")"," ");
+                oracion=oracion.replace("(","");
+                oracion=oracion.replace(")","");
                 palabras2=oracion.split(",");
                 tree.put(palabras2[0],palabras2[1]);
 
@@ -43,18 +43,10 @@ public class Pruebas {
 //-----------------------------------------------------------//
 
 //-----------------------------------------------------------//
-        tree.put( "facil", "eff" );
-        tree.put( "conjunto", "eee" );
-        tree.put( "aire", "aye" );
-        tree.put( "e", "sea" );
-        tree.put( "iglu", "eye" );
-        tree.put( "h", "aitch" );
-        tree.put( "z", "zed" );
-//-----------------------------------------------------------//
 
-//-----------------------------------------------------------//
-        System.out.println("BUSCAR");
-        str = tree.get( "e" );      //objecto
+        System.out.println("");   
+        System.out.println("Traduccion");
+
 //-----------------------------------------------------------//
 //se lee el archivo a traducir y se separa en palabras
 //las palabras de guardan en una arraylist
@@ -83,20 +75,23 @@ public class Pruebas {
 //-----------------------------------------------------------//
 //recorre el array para ver si la palabra se puede traducir
 //-----------------------------------------------------------//
+    
         for(int i=0;i<palabras.size();i++){
             nuevo = palabras.get(i);                        // Palabra que se desea buscar
-            String AsString = "" + nuevo;                   // Lo coloca como tostring
-
-            entero = AsString.compareTo(str.toString());     //como to string compara
-            if(entero==0){                                  //si encontro la palabra, se cambia por la traduccion en espa;ol
-                System.out.print("");
-
+         String AsString = "" + nuevo;                   // Lo coloca como tostring
+            str = tree.get( AsString );
+ 
+            if(str!=null){                                  //si encontro la palabra, se cambia por la traduccion en espa;ol
+                System.out.print(str+" ");
             }else{                                          //si no encontro la palabra, se imprime en ingles
                 System.out.print("*"+nuevo+"* ");
             }
         }
+                
+ //-----------------------------------------------------------//
+        System.out.println("");   
         System.out.println();
-        System.out.println("INordered Strings:");           //se imprime el arbol en In-orden
+        System.out.println("InOrdered Strings:");           //se imprime el arbol en In-orden
         BST.InorderPrint(tree.getRoot());
         System.out.println();        
 //-----------------------------------------------------------//
